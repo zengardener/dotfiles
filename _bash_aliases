@@ -1,0 +1,16 @@
+# find in hisory
+alias hf='history | grep '
+
+# weather alias
+alias wett='curl https://wttr.in/fra?format=2'
+
+# kubectl aliases
+# Get all api resources in a namespace
+alias k8s-get-res='kubectl api-resources --verbs=list --namespaced -o name \
+  | xargs -n 1 kubectl get --show-kind --ignore-not-found'
+
+# Get pods that are not in status running or completed
+alias kfail='kubectl get pods -A --no-headers=true | grep -v -e Running -e Completed'
+
+# Every day
+alias kg='kubectl get'

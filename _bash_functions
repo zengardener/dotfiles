@@ -1,0 +1,32 @@
+# some useful functions instead aliases (because alias do not accept args)
+
+### Decrypt string encoded by base64
+decsec () { echo "$1" | echo $(base64 -d); }
+
+### Describe pod using fuzzy
+kdes () {
+    kubectl get pods -A \
+        | fzf \
+        | awk '{ print $1, $2 }' \
+        | xargs kubectl describe pod -n
+}
+
+### Get logs from pod using fuzzy
+klog () {
+    kubectl get pods -A \
+        | fzf \
+        | awk '{ print $1, $2 }' \
+        | xargs kubectl logs -n
+}
+
+### Set namespace for k8s or use fuzzy serch on k8s context to set the namespace
+ksetns () {
+    if [[ $# -gt 0 ]]; then \
+        kubectl config use-context $1
+    else
+        kubectl config get-contexts \
+            | fzf \
+            | awk '{ print $1 }' \
+            | xargs kubectl config use-context
+    fi
+}
